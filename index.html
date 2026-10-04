@@ -473,8 +473,8 @@ document.addEventListener('change',e=>{const f=e.target.files&&e.target.files[0]
 async function notifGo(){try{if(!('Notification' in window)||!navigator.serviceWorker){toast('Notifications work in the home-screen app (iOS 16.4+)');return}
 if(Notification.permission!=='granted'){const r=await Notification.requestPermission();if(r!=='granted'){toast('Notifications are blocked in Settings');return}}
 const reg=await navigator.serviceWorker.getRegistration();if(!reg){toast('Open the home-screen app to use notifications');return}
-ov=null;render();toast('Sending in 5 seconds. Go to your home screen.');
-setTimeout(()=>{reg.showNotification('Insta',{body:'@eli_brassard just posted a new story!',icon:'icon-192.png',tag:'eli-story',data:{u:'eli'}}).catch(()=>{})},5000)}catch(_){toast('Could not send a notification here')}}
+ov=null;render();toast('Sending in 10 seconds. Go to your home screen.');
+setTimeout(()=>{reg.showNotification('@eli_brassard just posted a new story!',{icon:'icon-192.png',tag:'eli-story',data:{u:'eli'}}).catch(()=>{})},10000)}catch(_){toast('Could not send a notification here')}}
 function deepOpen(u){if(!hasSt(u))return;ov=null;chat=null;if(S.tab!=='home')S.tab='home';act('story',{u})}
 try{const q=new URLSearchParams(location.search).get('open');if(q&&q.indexOf('story-')===0){history.replaceState(null,'',location.pathname);setTimeout(()=>deepOpen(q.slice(6)),50)}
 navigator.serviceWorker&&navigator.serviceWorker.addEventListener('message',e=>{const m=e.data;if(m&&m.open==='story')deepOpen(m.u)})}catch(_){}
