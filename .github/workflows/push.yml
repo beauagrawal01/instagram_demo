@@ -1,0 +1,18 @@
+name: Send story notification
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: Notification text
+        default: "@eli_brassard just posted a new story!"
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm i web-push@3 --no-save --no-audit --no-fund
+      - run: node .github/push.js
+        env:
+          PUSH_SUBSCRIPTION: ${{ secrets.PUSH_SUBSCRIPTION }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          MESSAGE: ${{ inputs.message }}
