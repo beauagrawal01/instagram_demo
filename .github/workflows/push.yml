@@ -4,7 +4,7 @@ on:
     inputs:
       message:
         description: Notification text
-        default: "@eli_brassard just posted a new story!"
+        default: "@eli_brassard posted a new story!"
 jobs:
   send:
     runs-on: ubuntu-latest

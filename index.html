@@ -474,7 +474,7 @@ async function notifGo(){try{if(!('Notification' in window)||!navigator.serviceW
 if(Notification.permission!=='granted'){const r=await Notification.requestPermission();if(r!=='granted'){toast('Notifications are blocked in Settings');return}}
 const reg=await navigator.serviceWorker.getRegistration();if(!reg){toast('Open the home-screen app to use notifications');return}
 ov=null;render();toast('Sending in 10 seconds. Go to your home screen.');
-setTimeout(()=>{reg.showNotification('@eli_brassard just posted a new story!',{icon:'icon-192.png',tag:'eli-story',data:{u:'eli'}}).catch(()=>{})},10000)}catch(_){toast('Could not send a notification here')}}
+setTimeout(()=>{reg.showNotification('@eli_brassard posted a new story!',{icon:'icon-192.png',tag:'eli-story',data:{u:'eli'}}).catch(()=>{})},10000)}catch(_){toast('Could not send a notification here')}}
 async function pushGo(){try{if(!('Notification' in window)||!navigator.serviceWorker||!('PushManager' in window)){toast('Push works in the home-screen app (iOS 16.4+)');return}
 if(Notification.permission!=='granted'){const r=await Notification.requestPermission();if(r!=='granted'){toast('Notifications are blocked in Settings');return}}
 const reg=await navigator.serviceWorker.getRegistration();if(!reg){toast('Open the home-screen app to use push');return}
