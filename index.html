@@ -122,8 +122,6 @@ nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-w
 .tools{display:flex;align-items:center;gap:12px}.tools label{cursor:pointer;display:flex;align-items:center}
 .gif{border:2px solid currentColor;border-radius:7px;padding:2px 5px;font-weight:800;font-size:13px}
 .cmp .pst{display:none;background:var(--acc);color:#fff;width:34px;height:34px;border-radius:50%;place-items:center;flex:none}.cmp.has .pst{display:grid}.cmp.has .tools{display:none}
-.rfb{position:absolute;left:0;right:0;bottom:0;height:76px;background:rgba(48,52,56,.94);display:flex;gap:12px;padding:12px 16px 0;z-index:3}
-.rfb button{flex:1;height:44px;border-radius:10px;background:rgba(255,255,255,.14);color:#fff;font-weight:600;font-size:17px;display:flex;align-items:center;justify-content:center;gap:8px}
 .lb{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:15px;opacity:.9}
 .tchips{display:flex;gap:8px;overflow-x:auto;padding:4px 12px 10px;scrollbar-width:none}
 .tchip{flex:none;border:1px solid var(--line);border-radius:18px;padding:10px 18px;font-weight:600;font-size:17px;display:flex;align-items:center;gap:4px}.tchip.on{background:var(--sec);border-color:var(--sec)}
@@ -252,10 +250,10 @@ ${p.c.length>2&&!open?`<button class="more" data-act="cmt" data-id="${p.id}">Vie
 ${cs.map(c=>`<div class="cm"><b>${esc(S.users[c.u].user)}</b> ${esc(c.t)}</div>`).join('')}
 <div class="pt">${ago(p.ts)}</div></article>`}
 function reel(r,ix){const u=S.users[r.u],n=r.likes+(r.liked?1:0),lb=Object.keys(S.users).filter(k=>k!==r.u&&k!=='me')[r.id%4];
-return `<section class="reel pw${r.vid?' hasv':''}${ix===0?'':' nb'}" data-id="${r.id}" data-dbl="${r.id}" data-k="r" data-act="rtap">${r.vid?`<video class="bg" src="${r.vid}" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>`:`<img class="bg" src="${art(r.seed)}" alt="">`}<div class="shade"></div><div class="big">${I('heart','currentColor',110)}</div>
+return `<section class="reel pw${r.vid?' hasv':''} nb" data-id="${r.id}" data-dbl="${r.id}" data-k="r" data-act="rtap">${r.vid?`<video class="bg" src="${r.vid}" autoplay loop muted playsinline webkit-playsinline preload="auto"></video>`:`<img class="bg" src="${art(r.seed)}" alt="">`}<div class="shade"></div><div class="big">${I('heart','currentColor',110)}</div>
 <div class="rail"><button data-act="like" data-k="r" data-id="${r.id}" class="${r.liked?'liked':''}" aria-label="Like">${I('heart',r.liked?'currentColor':'',30)}<span>${fmt(n)}</span></button><button data-act="cmt" data-k="r" data-id="${r.id}" aria-label="Comments">${I('cmt','',30)}<span>${r.c.length}</span></button><button data-act="ssheet" data-k="r" data-id="${r.id}" aria-label="Send">${I('send','',30)}<span>${fmt(r.sh||0)}</span></button><button data-act="rsave" data-id="${r.id}" aria-label="Save">${I('save',r.saved?'currentColor':'',30)}</button><button data-act="copy" aria-label="More">${I('lines','',30,2)}</button></div>
 <div class="rinfo"><div style="display:flex;align-items:center;gap:10px"><span data-act="user" data-u="${r.u}">${av(r.u,36)}</span><b data-act="user" data-u="${r.u}">${esc(u.user)}${u.v?VB:''}</b>${S.fol[r.u]?'':`<button class="rf" data-act="follow" data-u="${r.u}">Follow</button>`}</div><p>${esc(r.cap)}</p><div class="lb">${av(lb,20)}<span>Liked by <b style="display:inline">${esc(S.users[lb].user)}</b> and ${Math.max(r.likes-1,0).toLocaleString('en-US')} others</span></div></div>
-<div class="rprog"><i></i></div>${ix===0?`<div class="rfb"><button data-act="rno" data-id="${r.id}">${I('x','',20,2.2)}Not interested</button><button data-act="ryes" data-id="${r.id}">${I('check','',20,2.2)}Interested</button></div>`:''}</section>`}
+<div class="rprog"><i></i></div></section>`}
 function tray(){return `<div class="tray">${['me','eli','maya','kenji','lola','ravi','nora'].map(id=>`<button class="${id==='me'?'you':''}" data-act="story" data-tray="1" data-u="${id}">${id==='me'?av('me',78,2,`<span class="badge" data-act="newstory">${I('add','',18,2.600)}</span>`):av(id,78,1)}<small>${id==='me'?'Your story':esc(S.users[id].user)}</small></button>`).join('')}</div>`}
 const TOP=['For you','Travel','Food','Fitness','Art','Tech'],TM={'sofia': 'Food', 'marcus': 'Fitness', 'hana': 'Art', 'diego': 'Travel', 'priya': 'Tech', 'owen': 'Fitness', 'amara': 'Art', 'lucas': 'Travel', 'chloe': 'Food', 'jonah': 'Tech', 'zara': 'Art', 'mateo': 'Travel', 'ingrid': 'Fitness', 'tobias': 'Food',lola:'Travel',kenji:'Food',ravi:'Fitness',nora:'Art',maya:'Tech'};
 function tile(x){const o=x.o;return x.k==='r'?`<div class="tile" data-act="preel" data-id="${o.id}"><img src="${art(o.seed)}" alt="">${x.ti?`<span class="ti">${I('reels','',22,2)}</span>`:''}<span class="vw">${I('eye','',20,2)}${fmt(o.likes*37)}</span></div>`:`<div class="tile" data-act="open" data-id="${o.id}" data-sc="${x.sc||''}"><img src="${src(o)}" alt="">${x.sc||x.nv?'':`<span class="vw">${I('eye','',20,2)}${fmt((o.likes||0)*37+1200)}</span>`}</div>`}
@@ -401,8 +399,6 @@ case'dmread':ov=null;toast('All caught up');break;
 case'dmf':S.df=d.f;break;
 case'dmreset':S.df='Primary';break;
 case'rsave':{const r=It('r',d.id);r.saved=!r.saved;toast(r.saved?'Saved':'Removed from saved');break}
-case'rno':It('r',d.id).hide=true;toast("Got it. You'll see fewer reels like this.");break;
-case'ryes':toast("Thanks. You'll see more reels like this.");return;
 case'rreset':S.reels.forEach(r=>r.hide=false);break;
 case'oclose':pop();break;
 case'open':ov={t:'post',id:+d.id,sc:d.sc||'',focus:+d.id};break;
